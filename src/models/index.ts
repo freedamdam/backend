@@ -12,7 +12,7 @@ export const config = async () => {
 
    // const mongo_conn = 'mongodb://localhost:27017/damdam'
    // const options: any = { useNewUrlParser: true, useUnifiedTopology: true }
-   const mongo_conn = 'mongodb+srv://kimdev:cyCqP7faAUxMYzK4@damdam.jp68w8y.mongodb.net'
+   const mongo_conn = process.env.MONGO_CONN_URL
    const options = {}
    await mongoose
       .connect(mongo_conn, options)
