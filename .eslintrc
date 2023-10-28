@@ -1,0 +1,32 @@
+{
+	"plugins": ["prettier", "@typescript-eslint"],
+	"extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended"],
+
+	// 코드를 해석하는 parser에 대한 설정
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "script",
+		"ecmaFeatures": {
+			"jsx": false
+		}
+	},
+
+	// linter가 파일을 분석할 때, 미리 정의된 전역변수에 무엇이 있는지 명시하는 속성
+	"env": {
+		"browser": false,
+		"node": true
+	},
+
+	// ESLint가 무시할 디렉토리, 파일을 설정
+	"ignorePatterns": ["node_modules/"],
+
+	// ESLint 룰을 설정
+	"rules": {
+		"prettier/prettier": "error",
+		"quotes": ["error", "single", { "allowTemplateLiterals": true }],
+		"@typescript-eslint/no-explicit-any": 0,
+		"@typescript-eslint/no-unused-vars": 0,
+		"no-unused-vars": 0,
+		"no-empty": 0
+	}
+}

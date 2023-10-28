@@ -1,0 +1,30 @@
+{
+	"extends": "./tsconfig.paths.json",
+	"ts-node": {
+		"transpileOnly": true,
+		"require": ["typescript-transform-paths/register", "tsconfig-paths/register"],
+		"compilerOptions": {
+			"module": "commonjs"
+		}
+	},
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"rootDir": "./",
+		"baseUrl": "./src",
+		"outDir": "./build",
+		"moduleResolution": "node",
+
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"strict": true,
+
+		"experimentalDecorators": true,
+
+		"plugins": [{ "transform": "typescript-transform-paths" }]
+	},
+	"typeRoots": ["@types", "./src/@types", "./node_modules/@types"],
+	"include": ["src/**/*.ts", "src/**/*.yaml", "src/types.ts", "src/routes/user/controllers_company"],
+	"exclude": ["node_modules", "__tests__", "jest.config.js"]
+}

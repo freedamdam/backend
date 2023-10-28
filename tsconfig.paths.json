@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"baseUrl": "src",
+		"paths": {
+			"@app": ["app.ts"],
+			"@routes/*": ["routes/*"],
+			"@socket/*": ["socket/*"],
+			"@models/*": ["models/*"],
+			"@config/*": ["config/*"],
+			"@crontab": ["crontab/index.ts"],
+			"@utils/*": ["utils/*"],
+			"@middlewares/*": ["middlewares/*"],
+			"@exceptions/*": ["exceptions/*"],
+			"@i18n/*": ["i18n/*"],
+			"@DTOs/*": ["DTOs/*"],
+			"@test/*": ["test/*"],
+			"@types": ["types.ts"]
+		}
+	}
+}
