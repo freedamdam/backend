@@ -27,6 +27,7 @@
 		"morgan": "^1.10.0",
 		"node-schedule": "^2.1.1",
 		"redis": "^4.6.7",
+		"reflect-metadata": "^0.1.13",
 		"socket.io": "^4.7.2",
 		"winston": "^3.10.0",
 		"winston-daily-rotate-file": "^4.7.1"

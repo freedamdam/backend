@@ -31,6 +31,9 @@ const schema: Schema<IUserDocument> = new mongoose.Schema(
 		//-personal
 		name: { type: String, default: undefined, minlength: 2, maxlength: 12 },
 		active: { type: Boolean, default: true },
+		birth: { type: Date, default: Date.now },
+		phone: { type: String, default: '', trim: true },
+		sex: { type: String, enum: ['man', 'woman'], default: undefined },
 	},
 	{ timestamps: true },
 )
@@ -68,7 +71,7 @@ const toAuth = (user: IUserDocument) => ({
 	role: user.role,
 
 	accessToken: sign(payload(user)),
-	// refreshToken: refresh(),
+	refreshToken: refresh(),
 })
 
 // [#] 5. Statics Functions

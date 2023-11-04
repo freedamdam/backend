@@ -1,5 +1,6 @@
-import { IsString, Matches } from 'class-validator'
-import { Expose } from 'class-transformer'
+import 'reflect-metadata'
+import { IsString, Matches, IsDate, IsOptional, ValidateIf } from 'class-validator'
+import { Expose, Transform } from 'class-transformer'
 
 export class LoginUserDTO {
 	@Expose()
@@ -13,6 +14,7 @@ export class LoginUserDTO {
 	})
 	public password!: string
 }
+
 export class RegisterUserDTO {
 	@Expose()
 	@IsString()
@@ -28,4 +30,21 @@ export class RegisterUserDTO {
 	@Expose()
 	@IsString()
 	public name!: string
-}
+
+	@Expose()
+	@IsOptional()
+	@IsString()
+	public sex?: string
+
+	@Expose()
+	@IsOptional()
+	@Transform(({ value }) => {
+	  if (typeof value === 'string' && value.match(/^\d{8}$/)) {
+		return new Date(`${value.substring(0, 4)}-${value.substring(4, 6)}-${value.substring(6, 8)}`);
+	  }
+	  return value;
+	})
+	@ValidateIf((o) => o.birth !== undefined)
+	@IsDate()
+	public birth?: Date;
+  }
