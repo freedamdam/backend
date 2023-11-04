@@ -21,6 +21,7 @@
 		"strict": true,
 
 		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
 
 		"plugins": [{ "transform": "typescript-transform-paths" }]
 	},
