@@ -36,7 +36,7 @@ export const getDebateDashboard: RequestHandler = async (req, res, next) => {
 				.sort({ createdAt: -1 })
 		).map((obj) => obj.toJSON()),
 
-		종료: (
+		'종료': (
 			await Debate.find({ ...query, status: '종료' })
 				.limit(3)
 				.sort({ createdAt: -1 })

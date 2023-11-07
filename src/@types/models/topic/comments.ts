@@ -6,7 +6,7 @@ export interface ITopicComment {
 	topicId: ObjectId
 	authorId: IUserDocument
 	message: string
-	emtion: string
+	emotion: string
 
 	// 시스템 정보
 	createdAt: Date

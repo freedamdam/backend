@@ -18,6 +18,10 @@ export interface IUser {
 	active: boolean
 	createdAt?: number
 	updatedAt?: number
+
+	// 토픽 정보
+	topicInterests?: object[]
+	hiddenTopicMessageIds?: object[]
 }
 
 export interface IUserToPublic {
