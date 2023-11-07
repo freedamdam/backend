@@ -14,8 +14,9 @@ import { errorHandler } from '@middlewares/error'
 // APP
 import model from '@models/index'
 import route from '@routes/index'
-import handler from 'socket/handler'
 import crontab from '@crontab'
+import debateHandler from '@socket/debateHandler'
+import topicHandler from '@socket/topicHandler'
 
 // 0. config
 dotenv.config()
@@ -45,6 +46,9 @@ server.on('close', () => logger.debug(`⚙️ API stop`))
 const io = new socket.Server(server, { cors: { origin: '*' } })
 global.io = io
 crontab(io)
-handler(io)
+
+// 03. socket
+debateHandler(io)
+topicHandler(io)
 
 export default server

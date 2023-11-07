@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose'
 
-export interface IDebate {
+export interface ITopicReport {
 	commentId: ObjectId
 	reporterId: ObjectId
 	message: string
@@ -10,7 +10,7 @@ export interface IDebate {
 	updatedAt: Date
 }
 
-export interface IDebateToJSON {
+export interface ITopicReportToJSON {
 	id: ObjectId
 	commentId: ObjectId
 	reporterId: ObjectId

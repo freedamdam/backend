@@ -34,6 +34,9 @@ const schema: Schema<IUserDocument> = new mongoose.Schema(
 		birth: { type: Date, default: Date.now },
 		phone: { type: String, default: '', trim: true },
 		sex: { type: String, enum: ['man', 'woman'], default: undefined },
+		//-topic
+		topicInterests: { type: [Object], default: [] },
+		hiddenTopicMessageIds: { type: [Object], default: [] },
 	},
 	{ timestamps: true },
 )
