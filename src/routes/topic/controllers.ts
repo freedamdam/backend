@@ -5,6 +5,9 @@ import type { RequestHandler } from 'express'
 import { PagingParams, makeParamQuery, makeParamReturn } from '@utils/paging'
 import User from '@models/account/User'
 import Topic from '@models/topic/Topic'
+import TopicComment from '@models/topic/Comment'
+import TopicReport from '@models/topic/Report'
+
 
 // [#] Topic
 export const getTopicDashboard: RequestHandler = async (req, res, next) => {
@@ -47,12 +50,11 @@ export const searchTopicList: RequestHandler = async (req, res, next) => {
 	const pagination: PagingParams = makeParamQuery({ limit, offset, page, perPage })
 
 	const query: any = new Object({})
-	if (typeof category === 'string' && category) query.categorys = category
+	if (typeof category === 'string' && category) query.category = category
 	if (typeof search === 'string' && search) {
-		query.$and = []
-		const keywords = search.split(' ')
-		query.$and.push({ title: { $regex: new RegExp(keywords.join('|')) } })
-	}
+    const keywords = search.split(' ');
+    query.$or = keywords.map((keyword) => ({ title: { $regex: new RegExp(keyword, 'i') } }));
+  }
 
 	const data = await Topic.findList(query, pagination)
 	const count = await Topic.countDocuments(query).exec()
@@ -74,6 +76,7 @@ export const registerLike: RequestHandler = async (req, res, next) => {
         { $addToSet: { topicInterests: topicId } }, // $addToSet은 중복을 방지
         { new: true } // 업데이트된 문서를 반환하도록 설정
       );
+      console.log(user);
   
       // 결과에 따라 응답을 전송
       if (user) {

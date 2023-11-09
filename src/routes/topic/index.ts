@@ -7,10 +7,10 @@ const router = Router()
 router.get('/dashboard', controller.getTopicDashboard)
 router.get('/search', controller.searchTopicList)
 // Topic Likes
-router.post('/topic/:topicId/likes', AuthRequired(), controller.registerLike)
-router.delete('/topic/:topicId/likes', AuthRequired(), controller.cancelLike)
+router.post('/:topicId/likes', AuthRequired() , controller.registerLike)
+router.delete('/:topicId/likes', AuthRequired(), controller.cancelLike)
 
 // List of Liked Topics
-router.get('/topic/myLikes', AuthRequired(), controller.getLikedTopicsList)
+router.get('/myLikes', AuthRequired(), controller.getLikedTopicsList)
 
 export default router

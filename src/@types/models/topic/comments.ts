@@ -18,5 +18,5 @@ export interface ITopicCommentToJSON {
 	topicId: ObjectId
 	authorId: IUserToPublic
 	message: string
-	emtion: string
+	emotion: string
 }

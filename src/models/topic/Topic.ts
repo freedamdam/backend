@@ -14,9 +14,9 @@ interface ITopicModel extends Model<ITopicDocument> {
 const schema: Schema<ITopicDocument> = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    views: [{ type: String }],
+    views: { type: Number, default: 0, required: true },
+    comments: { type: Number, default: 0, required: true },
     category: { type: String, enum: TopicCategory, required: true },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'TopicComment' }],
   },
   { timestamps: true },
 )
