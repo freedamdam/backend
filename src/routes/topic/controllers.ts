@@ -5,9 +5,6 @@ import type { RequestHandler } from 'express'
 import { PagingParams, makeParamQuery, makeParamReturn } from '@utils/paging'
 import User from '@models/account/User'
 import Topic from '@models/topic/Topic'
-import TopicComment from '@models/topic/Comment'
-import TopicReport from '@models/topic/Report'
-
 
 // [#] Topic
 export const getTopicDashboard: RequestHandler = async (req, res, next) => {
@@ -52,8 +49,8 @@ export const searchTopicList: RequestHandler = async (req, res, next) => {
 	const query: any = new Object({})
 	if (typeof category === 'string' && category) query.category = category
 	if (typeof search === 'string' && search) {
-    const keywords = search.split(' ');
-    query.$or = keywords.map((keyword) => ({ title: { $regex: new RegExp(keyword, 'i') } }));
+    const keywords = search.split(' ')
+    query.$or = keywords.map((keyword) => ({ title: { $regex: new RegExp(keyword, 'i') } }))
   }
 
 	const data = await Topic.findList(query, pagination)
@@ -67,52 +64,51 @@ export const searchTopicList: RequestHandler = async (req, res, next) => {
 // Register a like for a topic
 export const registerLike: RequestHandler = async (req, res, next) => {
     try {
-      const { topicId } = req.params;
-      const userId = req.user?.id;
+      const { topicId } = req.params
+      const userId = req.user?.id
   
       // 사용자의 likedTopics 배열에서 topicId를 찾아보고 없으면 추가
       const user = await User.findByIdAndUpdate(
         userId,
         { $addToSet: { topicInterests: topicId } }, // $addToSet은 중복을 방지
         { new: true } // 업데이트된 문서를 반환하도록 설정
-      );
-      console.log(user);
+      )
   
       // 결과에 따라 응답을 전송
       if (user) {
-        return res.status(200).json({ msg: 'Like registered successfully' });
+        return res.status(200).json({ msg: 'Like registered successfully' })
       } else {
-        return res.status(404).json({ msg: 'User not found' });
+        return res.status(404).json({ msg: 'User not found' })
       }
     } catch (error) {
-      return res.status(500).json({ msg: 'Server error', error });
+      return res.status(500).json({ msg: 'Server error', error })
     }
-  };
+  }
   
 
 // Cancel a like for a topic
 export const cancelLike: RequestHandler = async (req, res, next) => {
     try {
-      const { topicId } = req.params;
-      const userId = req.user?.id;
+      const { topicId } = req.params
+      const userId = req.user?.id
   
       // 사용자의 likedTopics 배열에서 topicId를 제거
       const user = await User.findByIdAndUpdate(
         userId,
         { $pull: { topicInterests: topicId } }, // $pull로 배열에서 요소를 제거
         { new: true }
-      );
+      )
   
       // 결과에 따라 응답을 전송
       if (user) {
-        return res.status(200).json({ msg: 'Like cancelled successfully' });
+        return res.status(200).json({ msg: 'Like cancelled successfully' })
       } else {
-        return res.status(404).json({ msg: 'User not found' });
+        return res.status(404).json({ msg: 'User not found' })
       }
     } catch (error) {
-      return res.status(500).json({ msg: 'Server error', error });
+      return res.status(500).json({ msg: 'Server error', error })
     }
-  };
+  }
   
 
 // Get list of liked topics for a user
@@ -144,3 +140,25 @@ export const getLikedTopicsList: RequestHandler = async (req, res, next) => {
     }
   }
 
+// Register a hit for a topic
+export const registerHit: RequestHandler = async (req, res, next) => {
+  try {
+      const { topicId } = req.params
+
+      // 토픽의 조회수를 1 증가시키는 업데이트 쿼리
+      const topic = await Topic.findByIdAndUpdate(
+          topicId,
+          { $inc: { views: 1 } }, // $inc 연산자로 조회수를 1 증가
+          { new: true, runValidators: true } // 업데이트된 문서를 반환하고 유효성 검사 실행
+      )
+
+      // 결과에 따라 응답을 전송
+      if (topic) {
+          return res.status(200).json({ msg: 'Hit registered successfully' })
+      } else {
+          return res.status(404).json({ msg: 'Topic not found' })
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: 'Server error', error })
+  }
+}
