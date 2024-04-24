@@ -2,14 +2,23 @@ import { Router } from 'express'
 import { AuthRequired } from '@middlewares/auth'
 import { validation } from '@middlewares/validator'
 //-DTOs
-import { LoginUserDTO, RegisterUserDTO } from '@DTOs/account/Auth'
+import {
+    LoginUserDTO,
+    RegisterUserDTO,
+    CheckUserIdentityDTO,
+} from '@DTOs/account/Auth'
 //-controllers
-import * as controller from './controllers' 
+import * as controller from './controllers'
 
 const router = Router()
 // [#] Auth : login/register
 router.post('/login', validation(LoginUserDTO), controller.login)
 router.post('/register', validation(RegisterUserDTO), controller.register)
+router.post(
+    '/check-identity',
+    validation(CheckUserIdentityDTO),
+    controller.checkIdentity,
+)
 
 //-Token
 router.post('/token/login', AuthRequired(), controller.loginByToken)
