@@ -48,11 +48,10 @@ export const register: RequestHandler = async (req, res, next) => {
     const result: DataResponse = { data, msg: 'FINISH REGISTER' }
     return res.json(result)
 }
-export const checkIdentity: RequestHandler = async (req, res, next) => {
+export const checkIdentity: RequestHandler = async (req, res) => {
     const { identity } = req.body
     const user = await User.exists({ identity })
-    if (user)
-        return next(new HttpException(HttpStatusCode.BAD_REQUEST, 'ALREADY'))
+    if (user) return res.json({ msg: 'ALREADY' })
     return res.json({ msg: 'OK' })
 }
 
